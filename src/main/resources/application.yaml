@@ -1,0 +1,23 @@
+logging.level:
+  org:
+    hibernate:
+      SQL: debug
+      type: trace
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ehyeon
+    username: ehyeon
+    password: ehyeon
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    # show-sql: true
+  # Swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
