@@ -1,19 +1,14 @@
 package dev.move.gps.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @Getter
 @ToString
-public class RecordDto {
+public class RecordDto { // Querydsl 종속을 피하기 위해 @QueryProjection 사용하지 않음
 
-    // INFO 조회할 때 long 으로 조회해서 Long 사용
-
-    private final Long step;
-    private final Long distance;
-
-    public RecordDto(Long step, Long distance) {
-        this.step = (step == null) ? 0 : step;
-        this.distance = (distance == null) ? 0 : distance;
-    }
+    private int step;
+    private int distance;
 }
