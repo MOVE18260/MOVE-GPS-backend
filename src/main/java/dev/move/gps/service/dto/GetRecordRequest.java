@@ -9,9 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 public class GetRecordRequest {
 
-    @DateTimeFormat(pattern = "yyyyMMddHHmm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private final LocalDateTime from;
 
-    @DateTimeFormat(pattern = "yyyyMMddHHmm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private final LocalDateTime to;
 }
