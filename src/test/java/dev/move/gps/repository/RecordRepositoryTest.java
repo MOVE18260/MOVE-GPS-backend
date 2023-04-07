@@ -93,4 +93,20 @@ class RecordRepositoryTest {
         assertThat(memberTotal.getStep()).isEqualTo(0);
         assertThat(memberTotal.getDistance()).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("월화수목금토일 조회 - 1월 2일 ~ 1월 8일")
+    void findWeeklyRecord() {
+        // given
+        LocalDateTime from = LocalDate.of(2023, 1, 2).atStartOfDay();
+        LocalDateTime to = LocalDate.of(2023, 1, 8).atTime(LocalTime.MAX);
+
+        // when
+        List<RecordDto> recordDtos = recordRepository.findAllRecordByDateTimeBetween(from, to);
+
+        // then - 결과 확인
+        for (RecordDto recordDto : recordDtos) {
+            System.out.println("recordDto = " + recordDto);
+        }
+    }
 }
