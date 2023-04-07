@@ -16,18 +16,18 @@ public class RecordService {
     @Autowired
     private final RecordRepository recordRepository;
 
-    @Transactional
-    public Record setRecord(RecordRequest recordDto) {
-        recordRepository.findRecordByDateTime(recordDto.getDateTime()).ifPresent((foundRecord) -> {
-            throw new IllegalArgumentException();
-        });
-
-        return recordRepository.save(recordDto.toEntity());
-    }
-
-    @Transactional(readOnly = true)
-    public Record findRecord(LocalDateTime dateTime) {
-        return recordRepository.findRecordByDateTime(dateTime)
-                .orElseThrow(IllegalArgumentException::new);
-    }
+//    @Transactional
+//    public Record setRecord(RecordRequest recordDto) {
+//        recordRepository.findRecordByDateTime(recordDto.getDateTime()).ifPresent((foundRecord) -> {
+//            throw new IllegalArgumentException();
+//        });
+//
+//        return recordRepository.save(recordDto.toEntity());
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public Record findRecord(LocalDateTime dateTime) {
+//        return recordRepository.findRecordByDateTime(dateTime)
+//                .orElseThrow(IllegalArgumentException::new);
+//    }
 }

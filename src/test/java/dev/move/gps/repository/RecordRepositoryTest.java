@@ -2,7 +2,6 @@ package dev.move.gps.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dev.move.gps.entity.Record;
@@ -62,8 +61,8 @@ class RecordRepositoryTest {
     }
 
     @Test
-    @DisplayName("일간 기록 합계 조회 - 2023년 1월 1일 조회")
-    void findMemberTotalTest1() throws JsonProcessingException {
+    @DisplayName("2023년 1월 1일 기록 합계 조회")
+    void findMemberTotalWithQuerydslTest1() {
         // given
         LocalDate findDate = LocalDate.of(2023, 1, 1);
 
@@ -71,48 +70,16 @@ class RecordRepositoryTest {
         LocalDateTime to = findDate.atTime(LocalTime.MAX);
 
         // when
-        Object[] result = recordRepository.findMemberTotalByDateTimeBetween(from, to);
+        RecordDto memberTotal = recordRepository.findRecordTotalByDateTimeBetween(from, to);
 
-        // then - 쿼리 결과 확인
-        System.out.println("objects = " + objectMapper.writeValueAsString(result));
+        // then
+        assertThat(memberTotal.getStep()).isEqualTo(15);
+        assertThat(memberTotal.getDistance()).isEqualTo(166);
     }
 
     @Test
-    @DisplayName("일간 기록 합계 조회 - 2023년 1월 2일 조회")
-    void findMemberTotalTest2() throws JsonProcessingException {
-        // given
-        LocalDate findDate = LocalDate.of(2023, 1, 2);
-
-        LocalDateTime from = findDate.atStartOfDay();
-        LocalDateTime to = findDate.atTime(LocalTime.MAX);
-
-        // when
-        Object[] result = recordRepository.findMemberTotalByDateTimeBetween(from, to);
-
-        // then - 쿼리 결과 확인
-        System.out.println("objects = " + objectMapper.writeValueAsString(result));
-    }
-
-    // INFO 직접 조회하면 Long 타입으로 DTO 를 받지만, Querydsl 은 Integer 로 받아서 주석 처리
-//    @Test
-//    @DisplayName("일간 기록 합계 조회 - 2023년 1월 3일 조회")
-//    void findMemberTotalTest() throws JsonProcessingException {
-//        // given
-//        LocalDate findDate = LocalDate.of(2023, 1, 3);
-//
-//        LocalDateTime from = findDate.atStartOfDay();
-//        LocalDateTime to = findDate.atTime(LocalTime.MAX);
-//
-//        // when
-//        RecordDto dto = recordRepository.findMemberTotalByDateTimeBetween2(from, to).get();
-//
-//        // then - 쿼리 결과 확인
-//        System.out.println("objects = " + dto);
-//    }
-
-    @Test
-    @DisplayName("일간 기록 합계 조회 with Querydsl")
-    void findMemberTotalWithQuerydslTest() {
+    @DisplayName("2023년 1월 3일 기록 합계 조회 - 기록 없음")
+    void findMemberTotalWithQuerydslTest2() {
         // given
         LocalDate findDate = LocalDate.of(2023, 1, 3);
 
@@ -120,9 +87,10 @@ class RecordRepositoryTest {
         LocalDateTime to = findDate.atTime(LocalTime.MAX);
 
         // when
-        RecordDto memberTotal = recordRepository.findMemberTotal(from, to);
+        RecordDto memberTotal = recordRepository.findRecordTotalByDateTimeBetween(from, to);
 
-        // then - 쿼리 결과 확인, 1월 3일인 값이 없으므로 0이 나와야 한다.
-        System.out.println("memberTotal = " + memberTotal);
+        // then
+        assertThat(memberTotal.getStep()).isEqualTo(0);
+        assertThat(memberTotal.getDistance()).isEqualTo(0);
     }
 }

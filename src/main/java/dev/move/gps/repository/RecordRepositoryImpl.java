@@ -17,7 +17,7 @@ public class RecordRepositoryImpl implements RecordRepositoryCustom {
     }
 
     @Override
-    public RecordDto findMemberTotal(LocalDateTime from, LocalDateTime to) {
+    public RecordDto findRecordTotalByDateTimeBetween(LocalDateTime from, LocalDateTime to) {
         return jpaQueryFactory
                 .select(Projections.constructor(RecordDto.class,
                         record.step.sum(),

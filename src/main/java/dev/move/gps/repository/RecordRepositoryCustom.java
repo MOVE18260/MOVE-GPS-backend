@@ -5,5 +5,5 @@ import java.time.LocalDateTime;
 
 public interface RecordRepositoryCustom {
 
-    RecordDto findMemberTotal(LocalDateTime from, LocalDateTime to);
+    RecordDto findRecordTotalByDateTimeBetween(LocalDateTime from, LocalDateTime to);
 }
