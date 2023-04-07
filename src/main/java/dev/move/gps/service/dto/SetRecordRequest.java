@@ -1,32 +1,35 @@
 package dev.move.gps.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import dev.move.gps.entity.Record;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class RecordRequest {
+public class SetRecordRequest {
 
     @NotNull
     @PastOrPresent
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // TODO pattern 변경 불가, 이유 모름
-    private final LocalDateTime dateTime;
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dateTime;
 
     @NotBlank
-    private final String location;
+    private String location;
 
     @PositiveOrZero
-    private final int step;
+    private int step;
 
     @PositiveOrZero
-    private final int distance;
+    private int distance;
 
     public Record toEntity() {
         return new Record(dateTime, location, step, distance);
